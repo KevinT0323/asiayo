@@ -1,6 +1,12 @@
-# 試想臨時有一活動網頁專案將於近日推出,預期推廣期間訪客流量會是平日常態之百倍(或更多)請簡易描述你/妳將如何確保服務能在推廣期間正常運作?考量的細節是什麼?
 - 依據平時的流量與效能監控來評估可能需要調整的機器設定
-    - 調整 HPA 的閥值，另外 Node Pool 的 Node 上限值也要一起調整
-    - 調整 Mysql 效能與 Pod 數量
-    - 使用 Redis 或者調整 Redis 的效能
+    - CloudWatch 
+    - 自建的 Grafana with prometheus
+- 調整機器自動擴縮容的設定
+    - 調整 HPA 以符合預期的流量
+    - 調整 Node Group 節點上限值
+    - 調整 Mysql 效能
+    - 調整 ELK 叢集效能以符合高併發日誌量
+- 使用 Redis 或者調整 Redis 的效能
+- 使用 CDN 加速靜態內容，降低伺服器負載
+- 異地備援部署於其他 AWS Region，使用 Global Accelerator 可在不同區域內切換請求
     
