@@ -1,0 +1,67 @@
+# 建立 read-only Service (Headless Service)，提供所有 Pod 的 DNS 名稱
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-readonly
+  namespace: asiayo
+  labels:
+    app: mysql
+spec:
+  clusterIP: None
+  ports:
+    - port: 3306
+      name: mysql
+  selector:
+    app: mysql
+---
+# 建立 read-write Service，固定指向第一個 Pod (mysql-0)
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-readwrite
+  namespace: asiayo
+spec:
+  type: ExternalName
+  externalName: mysql-0.mysql-readonly.asiayo.svc.cluster.local
+  ports:
+    - port: 3306
+      name: mysql
+---
+# 建立 MySQL StatefulSet，搭配 AWS PVC (利用 StorageClass: gp3)
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: asiayo
+spec:
+  serviceName: mysql-readonly
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+              name: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "your-root-password"  # 請依需求修改密碼
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-persistent-storage
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: gp3      # 使用 AWS EBS StorageClass
+        resources:
+          requests:
+            storage: 10Gi
