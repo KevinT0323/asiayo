@@ -52,7 +52,7 @@ spec:
               name: mysql
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: "your-root-password"  # 請依需求修改密碼
+              value: "root-password"  # 依需求修改密碼
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
