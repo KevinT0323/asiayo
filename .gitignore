@@ -1,3 +1,4 @@
 comprehensive_exam/exam-2/.terraform*
-comprehensive_exam/exam-2/terraform.tfstate.*
+comprehensive_exam/exam-2/terraform.tfstate
+comprehensive_exam/exam-2/terraform.tfstate.backup
 comprehensive_exam/exam-2/.terraform/*
