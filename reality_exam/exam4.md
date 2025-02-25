@@ -1,0 +1,7 @@
+- 透過 filebeat sidecar container 蒐集服務的日誌並且將日誌傳送給 logstash
+    - 透過 configmap 設計 filebeat.yml 注入於 sidecar container 中
+    - 設定 service container 與 sidecar container volume 共用
+- logstash 設定 input 接收 filebeat 傳來的日誌，透過 filter 過濾日誌轉換為想要的日誌格式，輸出至 elasticsearch 成為 index。
+    - 需有獨立 port 來接收 filebeat 傳過來的日誌
+    - 需測試 grok 出來的日誌格式成果
+- Kibana 上設定 index template(分片數量、生命週期規則等設定)、設定 Data Views 讓日誌能在 Discover 使用並且在 Discover 設計常用的 search，設計 Dashboard 來查看可圖形化的日誌資料。

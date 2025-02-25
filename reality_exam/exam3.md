@@ -1,4 +1,4 @@
-- 透過 AWS Systems Manager (SSM) 進入機器，
+- 透過 Session Manager 進入機器，
     1. 進入 AWS Console > EC2 > 選擇該機器 > 點擊 Connect
     2. 點擊 Session Manager
     3. 成功進入後，檢查系統日誌查找問題原因
@@ -23,5 +23,5 @@
 #### 問題發生可能原因
 - SSH 設定異常
 - 磁碟空間用完
-- CPU / 記憶體資源耗盡
+- CPU/記憶體資源耗盡
 - 系統更新導致異常

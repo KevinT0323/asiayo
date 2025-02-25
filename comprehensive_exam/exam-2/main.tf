@@ -29,7 +29,7 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws" # 使用 terraform-aws-modules/vpc/aws 模組來建立一個 VPC
   version = "5.8.1"
 
-  name = "education-vpc"
+  name = "production-vpc"
 
   cidr = "10.0.0.0/16"
   azs  = slice(data.aws_availability_zones.available.names, 0, 3) # 從 AWS 可用區（data.aws_availability_zones.available.names）中選取前三個可用區，確保高可用性。
